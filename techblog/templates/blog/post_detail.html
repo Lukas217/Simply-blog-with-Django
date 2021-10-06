@@ -1,0 +1,50 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}{{object.title}}{% endblock %}
+{% block content %}
+<!-- Navigation -->
+{% include 'base/navbar.html' %}
+<!-- Page Header -->
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('/media/post-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="post-heading">
+            <h1>{{object.title}}</h1>
+            <h2 class="subheading">{{object.subhead}}</h2>
+            <span class="meta">Posted by
+              <a href="#">{{ object.created_by }}</a>
+               on {{ object.publish_date}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <article>
+    <div class="container">
+         <!-- Call to Action Well -->
+         {% if user.is_authenticated %}
+        <div class="card my-5 py-4 text-center">
+            <div class="card-body">
+                <a href="{% url 'blog:post_list' %}" class="btn btn-danger">Back to list</a>
+                <a href="{% url 'blog:post_update' object.slug %}" class="btn btn-primary">Update post</a>
+                <a href="{% url 'blog:post_delete' object.slug %}" class="btn btn-danger">Delete post</a>         
+            </div>
+        </div>  
+        {% endif %}
+        <div class="row">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                {{ object.body|linebreaks }}
+                <p>Placeholder text by
+                    <a href="http://spaceipsum.com/">Space Ipsum</a>. Photographs by
+                    <a href="https://www.flickr.com/photos/nasacommons/">NASA on The Commons</a>.</p>
+            </div>
+        </div>
+    </div>
+</article>
+<hr>
+<!-- Footer -->
+{% include 'base/footer.html' %}
+{% endblock %}

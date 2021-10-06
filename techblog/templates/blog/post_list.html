@@ -1,0 +1,69 @@
+{% extends "base/base.html" %}
+{% load static %}
+{% block title %}TechBlog{% endblock %}
+{% block content %}
+<!-- Navigation -->
+{% include 'base/navbar.html' %}
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('/media/home-bg.jpg')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Blog site</h1>
+            <span class="subheading">Your blog site!</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            {% for object in object_list %}
+            <div class="post-preview">
+              <a href="{{ object.get_absolute_url }}">
+                <h2 class="post-title">
+                    {{ object.title }}
+                </h2>
+                <h3 class="post-subtitle">
+                    {{ object.body|truncatewords:30|linebreaks }}
+                </h3>
+              </a>
+              <p class="post-meta">Posted by
+                <a href="#">{{ object.crated_by }}</a>
+                on {{ object.publish_date}} </p>
+            </div>
+
+            <hr>
+            {% endfor %}
+
+                    <!-- Pager -->
+            <div class="clearfix">
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1">&laquo; first</a>
+                            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                        {% endif %}
+                
+                        <span class="current">
+                            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                        </span>
+                
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">next</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- Footer -->
+{% include 'base/footer.html' %}
+
+{% endblock %}
